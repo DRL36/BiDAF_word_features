@@ -59,7 +59,7 @@ class BiDAF(nn.Module):
         c_emb = self.emb(cw_idxs)         # (batch_size, c_len, hidden_size)
         q_emb = self.emb(qw_idxs)         # (batch_size, q_len, hidden_size)
         s = c_emb.shape
-        cf_emb = torch.zeros(s[0],s[1],1)
+        cf_emb = torch.zeros(s[0],s[1],1,device=CUDA)
         ct_emb = torch.cat((c_emb, cf_emb), dim = 2)
 
         for index in range(len(cw_idxs)):
