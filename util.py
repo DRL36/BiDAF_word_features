@@ -84,8 +84,7 @@ class SQuAD(data.Dataset):
 
     def compute_context_word_features(self, idx):
         s = self.context_idxs[idx].shape
-        device, gpu_ids = get_available_devices()
-        context_word_features = torch.zeros(s[0], dtype = torch.float, device = device)
+        context_word_features = torch.zeros(s[0], device = 'cuda')
         for j, word in enumerate(self.context_idxs[idx]):
             if word != 0:
                 if word in self.question_idxs[idx]:
