@@ -70,6 +70,14 @@ class SQuAD(data.Dataset):
         self.ids = torch.from_numpy(dataset['ids']).long()
         self.valid_idxs = [idx for idx in range(len(self.ids))
                            if use_v2 or self.y1s[idx].item() >= 0]
+        s = context_idxs.shape
+        self.context_word_features = torch.zeros(s[0], s[1], 1)
+        for i, context in self.context_idxs:
+            for j, word in context:
+                if word in question_idxs[i]:
+                    context_word_features[i][j][0] = 1
+
+
 
     def __getitem__(self, idx):
         idx = self.valid_idxs[idx]
@@ -79,7 +87,8 @@ class SQuAD(data.Dataset):
                    self.question_char_idxs[idx],
                    self.y1s[idx],
                    self.y2s[idx],
-                   self.ids[idx])
+                   self.ids[idx],
+                   self.context_word_features[idx])
 
         return example
 
