@@ -66,8 +66,8 @@ class BiDAF(nn.Module):
         cwf = torch.unsqueeze(cwf, dim = 2)
         print(c_emb.shape)
         print(cwf.shape)
-        print(c_emb.type)
-        print(cwf.type)
+        print(c_emb.type())
+        print(cwf.type())
         ct_emb = torch.cat((c_emb, cwf), dim = 2)
         # s = q_emb.shape
         # qf_emb = torch.zeros(s[0],s[1],1,device='cuda')
