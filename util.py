@@ -75,6 +75,8 @@ class SQuAD(data.Dataset):
         print(self.question_idxs.shape)
         self.context_word_features = torch.zeros(s[0], s[1], 1)
         for i, context in enumerate(self.context_idxs):
+            if i % 1000 == 0:
+                print(i)
             for j, word in enumerate(context):
                 if word in self.question_idxs[i]:
                     self.context_word_features[i][j][0] = 1
