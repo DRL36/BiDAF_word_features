@@ -70,16 +70,26 @@ class SQuAD(data.Dataset):
         self.ids = torch.from_numpy(dataset['ids']).long()
         self.valid_idxs = [idx for idx in range(len(self.ids))
                            if use_v2 or self.y1s[idx].item() >= 0]
-        s = self.context_idxs.shape
-        print(s)
-        print(self.question_idxs.shape)
-        self.context_word_features = torch.zeros(s[0], s[1], 1)
-        for i, context in enumerate(self.context_idxs):
-            if i % 1000 == 0:
-                print(i)
-            for j, word in enumerate(context):
-                if word in self.question_idxs[i]:
-                    self.context_word_features[i][j][0] = 1
+        # s = self.context_idxs.shape
+        # print(s)
+        # print(self.question_idxs.shape)
+        # self.context_word_features = torch.zeros(s[0], s[1], 1)
+        # for i, context in enumerate(self.context_idxs):
+        #     if i % 1000 == 0:
+        #         print(i)
+        #     for j, word in enumerate(context):
+        #         if word in self.question_idxs[i]:
+        #             self.context_word_features[i][j][0] = 1
+
+
+    def compute_context_word_features(self, idx):
+        s = self.context_idxs[idx].shape
+        context_word_features = torch.zeros(s[0])
+        for j, word in enumerate(self.context_idxs[idx]):
+            if word in self.question_idxs[idx]:
+                context_word_features[j] = 1
+        return context_word_features
+
 
 
 
@@ -92,7 +102,8 @@ class SQuAD(data.Dataset):
                    self.y1s[idx],
                    self.y2s[idx],
                    self.ids[idx],
-                   self.context_word_features[idx])
+                   self.compute_context_word_features(idx)
+                   )
 
         return example
 
