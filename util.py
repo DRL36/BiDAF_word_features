@@ -82,6 +82,7 @@ class SQuAD(data.Dataset):
         #             self.context_word_features[i][j][0] = 1
 
 
+    #compute word features(exact match)
     def compute_context_word_features(self, idx):
         s = self.context_idxs[idx].shape
         context_word_features = torch.zeros(s[0])
@@ -95,8 +96,6 @@ class SQuAD(data.Dataset):
         return context_word_features
 
 
-
-
     def __getitem__(self, idx):
         idx = self.valid_idxs[idx]
         example = (self.context_idxs[idx],
@@ -106,6 +105,7 @@ class SQuAD(data.Dataset):
                    self.y1s[idx],
                    self.y2s[idx],
                    self.ids[idx],
+                   #get word features
                    self.compute_context_word_features(idx)
                    )
 
@@ -153,6 +153,7 @@ def collate_fn(examples):
         return padded
 
     # Group by tensor type
+    #add cwf for word features for content
     context_idxs, context_char_idxs, \
         question_idxs, question_char_idxs, \
         y1s, y2s, ids, cwf = zip(*examples)
