@@ -70,7 +70,7 @@ class SQuAD(data.Dataset):
         self.ids = torch.from_numpy(dataset['ids']).long()
         self.valid_idxs = [idx for idx in range(len(self.ids))
                            if use_v2 or self.y1s[idx].item() >= 0]
-        s = context_idxs.shape
+        s = self.context_idxs.shape
         self.context_word_features = torch.zeros(s[0], s[1], 1)
         for i, context in self.context_idxs:
             for j, word in context:
