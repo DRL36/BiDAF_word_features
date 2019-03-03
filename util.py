@@ -84,7 +84,7 @@ class SQuAD(data.Dataset):
 
     def compute_context_word_features(self, idx):
         s = self.context_idxs[idx].shape
-        context_word_features = torch.zeros(s[0])
+        context_word_features = torch.zeros(s[0], dtype = torch.float)
         for j, word in enumerate(self.context_idxs[idx]):
             if word in self.question_idxs[idx]:
                 context_word_features[j] = 1
