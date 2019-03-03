@@ -71,6 +71,8 @@ class SQuAD(data.Dataset):
         self.valid_idxs = [idx for idx in range(len(self.ids))
                            if use_v2 or self.y1s[idx].item() >= 0]
         s = self.context_idxs.shape
+        print(s)
+        print(self.question_idxs.shape)
         self.context_word_features = torch.zeros(s[0], s[1], 1)
         for i, context in enumerate(self.context_idxs):
             for j, word in enumerate(context):
