@@ -99,6 +99,7 @@ def main(args):
                 # Setup for forward
                 cw_idxs = cw_idxs.to(device)
                 qw_idxs = qw_idxs.to(device)
+                cwf = cwf.to(device)
                 batch_size = cw_idxs.size(0)
                 optimizer.zero_grad()
 
@@ -171,6 +172,7 @@ def evaluate(model, data_loader, device, eval_file, max_len, use_squad_v2):
             # Setup for forward
             cw_idxs = cw_idxs.to(device)
             qw_idxs = qw_idxs.to(device)
+            cwf = cwf.to(device)
             batch_size = cw_idxs.size(0)
 
             # Forward

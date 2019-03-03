@@ -63,7 +63,7 @@ class BiDAF(nn.Module):
         #add word feature for content        
         cwf = torch.unsqueeze(cwf, dim = 2)
         cwf = cwf.type(torch.cuda.FloatTensor)
-        cwf.to('cuda')
+        #cwf.to('cuda')
         ct_emb = torch.cat((c_emb, cwf), dim = 2)
 
         #for dimension consistent, add a feature of all-zero for questions
