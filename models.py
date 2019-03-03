@@ -65,7 +65,7 @@ class BiDAF(nn.Module):
         # cf_emb = torch.zeros(s[0],s[1],1,device='cuda')
         cwf = torch.unsqueeze(cwf, dim = 2)
 
-        cwf = cwf.type(torch.FloatTensor)
+        cwf = cwf.type(torch.cuda.FloatTensor)
         cwf.to('cuda')
         print(c_emb.shape)
         print(cwf.shape)
