@@ -35,9 +35,8 @@ class BiDAF(nn.Module):
         self.emb = layers.Embedding(word_vectors=word_vectors,
                                     hidden_size=hidden_size,
                                     drop_prob=drop_prob)
-        hidden_size = hidden_size + 1
 
-        self.enc = layers.RNNEncoder(input_size=hidden_size,
+        self.enc = layers.RNNEncoder(input_size=hidden_size+1,
                                      hidden_size=hidden_size,
                                      num_layers=1,
                                      drop_prob=drop_prob)
