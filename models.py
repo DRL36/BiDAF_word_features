@@ -35,21 +35,22 @@ class BiDAF(nn.Module):
         self.emb = layers.Embedding(word_vectors=word_vectors,
                                     hidden_size=hidden_size,
                                     drop_prob=drop_prob)
+        self.n_hidden_size = hidden_size + 1
 
-        self.enc = layers.RNNEncoder(input_size=hidden_size + 1,
-                                     hidden_size=hidden_size,
+        self.enc = layers.RNNEncoder(input_size=self.n_hidden_size,
+                                     hidden_size=self.n_hidden_size,
                                      num_layers=1,
                                      drop_prob=drop_prob)
 
-        self.att = layers.BiDAFAttention(hidden_size=2 * hidden_size,
+        self.att = layers.BiDAFAttention(hidden_size=2 * self.n_hidden_size,
                                          drop_prob=drop_prob)
 
-        self.mod = layers.RNNEncoder(input_size=8 * hidden_size,
-                                     hidden_size=hidden_size,
+        self.mod = layers.RNNEncoder(input_size=8 * self.n_hidden_size,
+                                     hidden_size=self.n_hidden_size,
                                      num_layers=2,
                                      drop_prob=drop_prob)
 
-        self.out = layers.BiDAFOutput(hidden_size=hidden_size,
+        self.out = layers.BiDAFOutput(hidden_size=self.n_hidden_size,
                                       drop_prob=drop_prob)
 
     def forward(self, cw_idxs, qw_idxs, cwf):
